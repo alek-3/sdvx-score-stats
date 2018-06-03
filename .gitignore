@@ -70,5 +70,6 @@ fabric.properties
 # End of https://www.gitignore.io/api/pycharm
 
 ### custom ###
-# �X�R�A�V�[�g�̃t�@�C��
+# スコアシートはサンプルを一つだけおいて基本的に管理外
 scoresheet/*.csv
+!scoresheet/score_sample.csv
