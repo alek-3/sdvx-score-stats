@@ -69,7 +69,6 @@ class Stats:
         wb = openpyxl.load_workbook('sdvx_score_averages.xlsx')
         sheet = wb.active
         sheet.cell(row=1, column=1).value = '日付＼レベル'
-        sheet.column_dimensions['A'].width = 13
         for col in range(2,22):
             sheet.cell(row=1, column=col).value = col - 1
 
@@ -81,9 +80,13 @@ class Stats:
         record_date = datetime.datetime.strptime(date_str, '%Y%m%d')
         return record_date.date()
 
+    def arrange_file_layout(self):
+        wb = openpyxl.load_workbook('sdvx_score_averages.xlsx')
+        sheet = wb.active
+        sheet.column_dimensions['A'].width = 13
+        sheet.column_dimensions.group(start='B', end='M', hidden=True)
 
-
-
+        wb.save('sdvx_score_averages.xlsx')
 
 
 stats = Stats()
@@ -99,3 +102,4 @@ for file in files_file:
     stats.show_score_stats(file)
     file_number += 1
 
+stats.arrange_file_layout()
