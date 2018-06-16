@@ -1,14 +1,16 @@
 import csv
 import os
 import openpyxl
-
+import datetime
 
 class Stats:
     def show_score_stats(self, file_name):
         csv_path = os.path.join("scoresheet", file_name)
+        record_date = self.filename_to_date(file_name)
         self.get_play_count(csv_path)
         averages = self.calc_avarage(csv_path)
-        self.write_excel(averages)
+        self.write_excel(record_date, averages)
+
 
 
     def calc_avarage(self, csv_path):
@@ -46,12 +48,16 @@ class Stats:
                 play_count += int(row["プレー回数"])
             print("譜面プレー回数：{play_count}".format(play_count=play_count))
 
-    def write_excel(self, averages):
+    def write_excel(self, record_date, averages):
         """日付と平均スコアの推移をExcelシートに書きこむ"""
         wb = openpyxl.load_workbook('sdvx_score_averages.xlsx')
         sheet = wb.active
 
+        # 一列目
+        sheet.cell(row=file_number + 1, column=1).value = record_date
+
         # 二行目以降
+        # 二列目以降
         level = 1
         for average in averages:
             sheet.cell(row=file_number + 1, column=level + 1).value = average[1]['平均スコア']
@@ -63,10 +69,18 @@ class Stats:
         wb = openpyxl.load_workbook('sdvx_score_averages.xlsx')
         sheet = wb.active
         sheet.cell(row=1, column=1).value = '日付＼レベル'
+        sheet.column_dimensions['A'].width = 13
         for col in range(2,22):
             sheet.cell(row=1, column=col).value = col - 1
 
         wb.save('sdvx_score_averages.xlsx')
+
+    def filename_to_date(self, filename):
+        """日付を表す文字列を日付形式に変換する？(例:'score20180616')"""
+        date_str = filename[5:13]
+        record_date = datetime.datetime.strptime(date_str, '%Y%m%d')
+        return record_date.date()
+
 
 
 
