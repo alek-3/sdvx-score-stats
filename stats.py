@@ -74,9 +74,9 @@ class Stats:
 
         wb.save('sdvx_score_averages.xlsx')
 
-    def filename_to_date(self, filename):
+    def filename_to_date(self, file_name):
         """日付を表す文字列を日付形式に変換する？(例:'score20180616')"""
-        date_str = filename[5:13]
+        date_str = file_name[5:13]
         record_date = datetime.datetime.strptime(date_str, '%Y%m%d')
         return record_date.date()
 
