@@ -4,13 +4,13 @@ import openpyxl
 import datetime
 
 class Stats:
-    def show_score_stats(self, file_name):
+    def output_score_stats(self, file_name):
         csv_path = os.path.join("scoresheet", file_name)
+        self.show_play_count(csv_path)
+
         record_date = self.filename_to_date(file_name)
-        self.get_play_count(csv_path)
         averages = self.calc_avarage(csv_path)
         self.write_excel(record_date, averages)
-
 
 
     def calc_avarage(self, csv_path):
@@ -37,9 +37,7 @@ class Stats:
             print(sorted(level_score_dict.items())[16][1]['平均スコア'])
             return sorted(level_score_dict.items())
 
-
-
-    def get_play_count(self, csv_path):
+    def show_play_count(self, csv_path):
         """プレーした譜面の合計回数（投入クレジット数ではない）を出力する"""
         with open(csv_path, "r", encoding="utf-8") as f:
             r = csv.DictReader(f, delimiter=",")
@@ -53,7 +51,7 @@ class Stats:
         wb = openpyxl.load_workbook('sdvx_score_averages.xlsx')
         sheet = wb.active
 
-        # 一列目
+        # 一列目は日付を入力する
         sheet.cell(row=file_number + 1, column=1).value = record_date
 
         # 二行目以降
@@ -99,7 +97,7 @@ stats.write_header()
 file_number = 1
 
 for file in files_file:
-    stats.show_score_stats(file)
+    stats.output_score_stats(file)
     file_number += 1
 
 stats.arrange_file_layout()
