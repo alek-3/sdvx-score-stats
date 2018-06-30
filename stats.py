@@ -36,7 +36,8 @@ class Stats:
         level = 1
         for average in averages:
             sheet.cell(row=file_number + 2, column=level + 1).value = average[1]['平均スコア']
-            sheet.cell(row=2, column=level + 1).value = average[1]['譜面数']
+            if file_number == 1:
+                sheet.cell(row=2, column=level + 1).value = average[1]['譜面数']
             level += 1
 
         wb.save('sdvx_score_averages.xlsx')
@@ -74,7 +75,7 @@ stats.write_header()
 # ファイル番号を行番号として使う
 file_number = 1
 
-for file in files_file:
+for file in reversed(list(files_file)):
     stats.output_score_stats(file)
     file_number += 1
 
