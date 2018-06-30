@@ -5,9 +5,6 @@ import datetime
 
 
 class AverageScores:
-    record_date = ''
-    averages = []
-
     def __init__(self, file_name):
         csv_path = os.path.join("scoresheet", file_name)
         self.record_date = self.filename_to_date(file_name)
