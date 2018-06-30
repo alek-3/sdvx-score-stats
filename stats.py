@@ -28,14 +28,15 @@ class Stats:
         wb = openpyxl.load_workbook('sdvx_score_averages.xlsx')
         sheet = wb.active
 
-        # 一列目は日付を入力する
-        sheet.cell(row=file_number + 1, column=1).value = record_date
+        # 1列目は日付を入力する
+        sheet.cell(row=file_number + 2, column=1).value = record_date
 
-        # 二行目以降
-        # 二列目以降
+        # 3行目以降
+        # 2列目以降
         level = 1
         for average in averages:
-            sheet.cell(row=file_number + 1, column=level + 1).value = average[1]['平均スコア']
+            sheet.cell(row=file_number + 2, column=level + 1).value = average[1]['平均スコア']
+            sheet.cell(row=2, column=level + 1).value = average[1]['譜面数']
             level += 1
 
         wb.save('sdvx_score_averages.xlsx')
@@ -44,6 +45,7 @@ class Stats:
         wb = openpyxl.load_workbook('sdvx_score_averages.xlsx')
         sheet = wb.active
         sheet.cell(row=1, column=1).value = '日付＼レベル'
+        sheet.cell(row=2, column=1).value = '譜面数'
         for col in range(2,22):
             sheet.cell(row=1, column=col).value = col - 1
 

@@ -10,8 +10,8 @@ class AverageScores:
 
     def __init__(self, file_name):
         csv_path = os.path.join("scoresheet", file_name)
-        record_date = self.filename_to_date(file_name)
-        averages = self.calc_avarage(csv_path)
+        self.record_date = self.filename_to_date(file_name)
+        self.averages = self.calc_avarage(csv_path)
 
     def calc_avarage(self, csv_path):
         """レベルごとの平均点を計算し、出力する"""
