@@ -7,6 +7,8 @@ from avarage_scores import AverageScores
 
 
 class Stats:
+    HEADER_ROWS = 2
+
     def output_score_stats(self, file_name):
         csv_path = os.path.join("scoresheet", file_name)
         self.show_play_count(csv_path)
@@ -29,14 +31,15 @@ class Stats:
         sheet = wb.active
 
         # 1列目は日付を入力する
-        sheet.cell(row=file_number + 2, column=1).value = record_date
+        sheet.cell(row=file_number + self.HEADER_ROWS, column=1).value = record_date
 
         # 3行目以降
         # 2列目以降
         level = 1
         for average in averages:
-            sheet.cell(row=file_number + 2, column=level + 1).value = average[1]['平均スコア']
+            sheet.cell(row=file_number + self.HEADER_ROWS, column=level + 1).value = average[1]['平均スコア']
             if file_number == 1:
+                # 最新のスコアデータから譜面数を取り出す
                 sheet.cell(row=2, column=level + 1).value = average[1]['譜面数']
             level += 1
 

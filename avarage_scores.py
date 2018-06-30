@@ -34,7 +34,6 @@ class AverageScores:
                 level_score_dict[level]["平均スコア"] = score["スコア合計"] / score["譜面数"]
 
             print(sorted(level_score_dict.items()))
-            print(sorted(level_score_dict.items())[16][1]['平均スコア'])
             return sorted(level_score_dict.items())
 
     def filename_to_date(self, file_name):
