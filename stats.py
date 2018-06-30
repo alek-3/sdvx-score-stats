@@ -42,7 +42,11 @@ class Stats:
         wb.save('sdvx_score_averages.xlsx')
 
     def write_header(self):
-        wb = openpyxl.load_workbook('sdvx_score_averages.xlsx')
+        if os.path.exists('sdvx_score_averages.xlsx'):
+            wb = openpyxl.load_workbook('sdvx_score_averages.xlsx')
+        else:
+            wb = openpyxl.Workbook()
+
         sheet = wb.active
         sheet.cell(row=1, column=1).value = '日付＼レベル'
         sheet.cell(row=2, column=1).value = '譜面数'
@@ -53,6 +57,7 @@ class Stats:
 
     def arrange_file_layout(self):
         wb = openpyxl.load_workbook('sdvx_score_averages.xlsx')
+
         sheet = wb.active
         sheet.column_dimensions['A'].width = 13
         sheet.column_dimensions.group(start='B', end='M', hidden=True)
